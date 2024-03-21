@@ -1,1 +1,1 @@
-# stress-relief-web-app
+# Games that relief stress - web app
