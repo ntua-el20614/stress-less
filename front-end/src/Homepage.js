@@ -1,5 +1,6 @@
 import React from 'react';
 import BreathingExercise from './BreathingEx';
+import MemoryExercise from './MemoryEx';
 // Define the Header component
 const Header = ({ onLogin }) => {
   return (
@@ -27,10 +28,11 @@ function Homepage() {
       <Header onLogin={handleLogin} />
       <main className="App-main">
         <h1>Home Page</h1>
-        {
         
-        BreathingExercise()
-        }
+        
+        <BreathingExercise onStart={() => console.log('Breathing exercise started')} />
+        <MemoryExercise onStart={() => console.log('Memory exercise started')} />
+    
       </main>
     </div>
   );
