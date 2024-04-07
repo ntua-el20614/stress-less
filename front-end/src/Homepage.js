@@ -1,10 +1,10 @@
 import React from 'react';
 import BreathingExercise from './BreathingEx';
 import MemoryExercise from './MemoryEx';
-// Define the Header component
+
 const Header = ({ onLogin }) => {
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', backgroundColor: '#f5f5f5' }}>
+    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem'}}>
       <h1>StressLess</h1>
       <button onClick={onLogin} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
         Login
@@ -13,26 +13,41 @@ const Header = ({ onLogin }) => {
   );
 };
 
-// Define the Homepage component that uses the Header
 function Homepage() {
-  // Placeholder login function
   const handleLogin = () => {
     console.log('Login clicked');
-    // Here, you would add your logic to handle the login action,
-    // such as showing a login modal or redirecting to a login page.
+  };
+
+  // Adjusted box style for exact fit
+  const exerciseBoxStyle = {
+    border: '2px solid #ccc',
+    margin: '10px',
+    padding: '1rem',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    // Adjust width to account for margins
+    width: 'calc(50% - 20px)', // Assuming 10px margin on each side
+  };
+
+  // Container style remains the same
+  const exercisesContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
   };
 
   return (
     <div className="App">
-      {/* Use the Header component and pass the handleLogin function as the onLogin prop */}
       <Header onLogin={handleLogin} />
       <main className="App-main">
         <h1>Home Page</h1>
-        
-        
-        <BreathingExercise onStart={() => console.log('Breathing exercise started')} />
-        <MemoryExercise onStart={() => console.log('Memory exercise started')} />
-    
+        <div style={exercisesContainerStyle}>
+          <div style={exerciseBoxStyle}>
+            <BreathingExercise onStart={() => console.log('Breathing exercise started')} />
+          </div>
+          <div style={exerciseBoxStyle}>
+            <MemoryExercise onStart={() => console.log('Memory exercise started')} />
+          </div>
+        </div>
       </main>
     </div>
   );
