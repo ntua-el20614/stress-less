@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS name_here;
+DROP DATABASE IF EXISTS stress_relief;
 
-CREATE DATABASE name_here;
-USE name_here;
+CREATE DATABASE stress_relief;
+USE stress_relief;
 
 CREATE TABLE users (
     userID INT AUTO_INCREMENT PRIMARY KEY,
