@@ -1,6 +1,7 @@
 import React from 'react';
 import BreathingExercise from './BreathingEx';
 import MemoryExercise from './MemoryEx';
+import Tetris_main from './tetris/main';
 
 const Header = ({ onLogin }) => {
   return (
@@ -39,7 +40,7 @@ function Homepage() {
     <div className="App">
       <Header onLogin={handleLogin} />
       <main className="App-main">
-        <h1>Home Page</h1>
+        <h3>Home Page</h3>
         <div style={exercisesContainerStyle}>
           <div style={exerciseBoxStyle}>
             <BreathingExercise onStart={() => console.log('Breathing exercise started')} />
@@ -48,6 +49,7 @@ function Homepage() {
             <MemoryExercise onStart={() => console.log('Memory exercise started')} />
           </div>
         </div>
+        <Tetris_main></Tetris_main>
       </main>
     </div>
   );
