@@ -2,12 +2,17 @@ import React from 'react';
 import BreathingExercise from './BreathingEx';
 import MemoryExercise from './MemoryEx';
 import Tetris_main from './tetris/main';
-
+import brbImage from './img/brb.png';
+import logo from './img/favicon.ico';
 const Header = ({ onLogin }) => {
+  const logoStyle = {
+    height: '4rem',
+    marginLeft: '0.5rem',
+  };
   return (
     <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem'}}>
-      <h1>StressLess</h1>
-      <button onClick={onLogin} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+      <h1><img style={logoStyle} src={logo} alt="Logo"/> StressLess </h1>
+      <button onClick={onLogin} style={{ padding: '0.5rem 1rem', cursor: 'pointer', width: '100px', height: '30px' }}>
         Login
       </button>
     </header>
@@ -19,28 +24,43 @@ function Homepage() {
     console.log('Login clicked');
   };
 
-  // Adjusted box style for exact fit
   const exerciseBoxStyle = {
     border: '2px solid #ccc',
     margin: '10px',
     padding: '1rem',
     borderRadius: '8px',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    // Adjust width to account for margins
-    width: 'calc(50% - 20px)', // Assuming 10px margin on each side
+    width: 'calc(50% - 20px)',
   };
 
-  // Container style remains the same
   const exercisesContainerStyle = {
     display: 'flex',
     justifyContent: 'space-between',
   };
 
+  const mainStyle = {
+    padding: '0 1rem', // Reduced padding around the main content
+  };
+
+  const titleStyle = {
+    marginBottom: '0.5rem', // Reduce the bottom margin of the title
+  };
+
+  const imageStyle = {
+    marginTop: '1rem', // Add some space above the image
+    alignSelf: 'center', // Aligns the image to the center of the page
+    maxWidth: '10%', // Makes the image responsive
+
+    cursor: 'pointer',
+  };
+  //<h3 style={titleStyle}>Home Page</h3>        
+
   return (
     <div className="App">
       <Header onLogin={handleLogin} />
-      <main className="App-main">
-        <h3>Home Page</h3>
+      <main className="App-main" style={mainStyle}>
+
+        <img style={imageStyle} src={brbImage} alt="BRB" />
         <div style={exercisesContainerStyle}>
           <div style={exerciseBoxStyle}>
             <BreathingExercise onStart={() => console.log('Breathing exercise started')} />
@@ -49,7 +69,7 @@ function Homepage() {
             <MemoryExercise onStart={() => console.log('Memory exercise started')} />
           </div>
         </div>
-        <Tetris_main></Tetris_main>
+        <Tetris_main/>
       </main>
     </div>
   );
