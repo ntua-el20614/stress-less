@@ -40,39 +40,53 @@ function BreathingExercise() {
     }
   };
 
-  const circumference = 2 * Math.PI * 45; // Assuming the radius of the circle is 30
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
   const progress = countdown / (phases[currentPhaseIndex]?.duration || 1) * circumference;
 
-return (
-    <div>
+  const containerStyle = {
+    position: 'fixed', // Use fixed to keep it always in view without scrolling
+    top: '50%', // Center vertically
+    left: '50%', // Center horizontally
+    transform: 'translate(-50%, -50%)', // Adjust for the element's own size
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
+  return (
+    <div style={containerStyle}>
         <h2>Breathing Exercise</h2>
         <button onClick={startExercise}>
             {active ? 'Stop Exercise' : 'Start Exercise'}
         </button>
         {active && currentPhaseIndex !== null && (
             <>
-                <p style={{ fontWeight: 'bold' }}>{phases[currentPhaseIndex].name}</p>
-                <svg width="100" height="100" viewBox="-50 -50 100 100">
+                <p style={{ fontWeight: 'bold', fontSize: '20px' }}>{phases[currentPhaseIndex].name}</p>
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
                     {/* Background circle */}
                     <circle
                         stroke="grey"
                         fill="transparent"
-                        strokeWidth="5"
-                        r="45"
+                        strokeWidth="8"
+                        r={radius}
                         cx="0"
                         cy="0"
                     />
                     {/* Progress circle */}
                     <circle
-                        stroke="blue"
-                        fill="transparent"
-                        strokeWidth="5"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={circumference - progress}
-                        r="45"
-                        cx="0"
-                        cy="0"
-                        transform="rotate(-90)"
+                      style={{
+                        stroke: "blue",
+                        fill: "transparent",
+                        strokeWidth: "8"
+                      }}
+                      strokeDasharray={circumference}
+                      strokeDashoffset={circumference - progress}
+                      r={radius}
+                      cx="0"
+                      cy="0"
+                      transform="rotate(-90)"
                     />
                     {/* Text in the center */}
                     <text fill="#000" x="0" y="0" textAnchor="middle" dy="5">

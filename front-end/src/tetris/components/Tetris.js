@@ -74,29 +74,41 @@ const Tetris = () => {
   };
 
   const dropPlayer = () => {
-    // We don't need to run the interval when we use the arrow down to
-    // move the tetromino downwards. So deactivate it for now.
     setDropTime(null);
     drop();
   };
 
-  // This one starts the game
-  // Custom hook by Dan Abramov
   useInterval(() => {
     drop();
   }, dropTime);
 
-  const move = ({ keyCode }) => {
-    if (!gameOver) {
-      if (keyCode === 37) {
-        movePlayer(-1);
-      } else if (keyCode === 39) {
-        movePlayer(1);
-      } else if (keyCode === 40) {
-        dropPlayer();
-      } else if (keyCode === 38) {
-        playerRotate(stage, 1);
+  const handleTouchStart = (e) => {
+    const touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    e.target.setAttribute('data-touchStart', JSON.stringify(touchStart));
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchStart = JSON.parse(e.target.getAttribute('data-touchStart'));
+    const touchEnd = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+    const dx = touchEnd.x - touchStart.x;
+    const dy = touchEnd.y - touchStart.y;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) > 10) { // threshold for swipe
+      if (absDx > absDy) {
+        if (dx > 0) {
+          movePlayer(1); // right swipe
+        } else {
+          movePlayer(-1); // left swipe
+        }
+      } else {
+        if (dy > 0) {
+          dropPlayer(); // down swipe
+        }
       }
+    } else {
+      playerRotate(); // tap for rotation
     }
   };
 
@@ -104,8 +116,10 @@ const Tetris = () => {
     <StyledTetrisWrapper
       role="button"
       tabIndex="0"
-      onKeyDown={e => move(e)}
+      onKeyDown={e => movePlayer(e)}
       onKeyUp={keyUp}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <StyledTetris>
         <Stage stage={stage} />
@@ -115,7 +129,7 @@ const Tetris = () => {
           ) : (
             <div>
               <Display text={`Score: ${score}`} />
-              <Display text={`rows: ${rows}`} />
+              <Display text={`Rows: ${rows}`} />
               <Display text={`Level: ${level}`} />
             </div>
           )}
