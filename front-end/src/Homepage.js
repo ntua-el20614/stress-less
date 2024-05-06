@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BreathingExercise from './BreathingEx';
 import MemoryExercise from './MemoryEx';
-import Tetris_main from './tetris/main';
+import TetrisMain from './tetris/main';
 import brbImage from './img/brb.png';
 import logo from './img/favicon.ico';
 
@@ -61,7 +61,7 @@ function Homepage() {
         <div style={exercisesContainerStyle}>
           {activeExercise === 'breathing' && <BreathingExercise onStart={() => console.log('Breathing exercise started')} />}
           {activeExercise === 'memory' && <MemoryExercise onStart={() => console.log('Memory exercise started')} />}
-          {activeExercise === 'tetris' && <Tetris_main />}
+          {activeExercise === 'tetris' && <TetrisMain />}
         </div>
       </main>
     </div>

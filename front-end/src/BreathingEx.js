@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 function BreathingExercise() {
   const phases = [
@@ -12,6 +12,14 @@ function BreathingExercise() {
   const [countdown, setCountdown] = useState(0);
   const [active, setActive] = useState(false);
 
+  const moveToNextPhase = useCallback(() => {
+    setCurrentPhaseIndex(index => {
+      const nextIndex = index === null ? 0 : (index + 1) % phases.length;
+      setCountdown(phases[nextIndex].duration);
+      return nextIndex;
+    });
+  }, [phases]); // Note that 'phases' is a static value and does not change
+
   useEffect(() => {
     let timer;
     if (active && countdown > 0) {
@@ -20,15 +28,7 @@ function BreathingExercise() {
       moveToNextPhase();
     }
     return () => clearTimeout(timer);
-  }, [active, countdown]);
-
-  const moveToNextPhase = () => {
-    setCurrentPhaseIndex(index => {
-      const nextIndex = index === null ? 0 : (index + 1) % phases.length;
-      setCountdown(phases[nextIndex].duration);
-      return nextIndex;
-    });
-  };
+  }, [active, countdown, moveToNextPhase]); // Include moveToNextPhase here
 
   const startExercise = () => {
     if (!active) {

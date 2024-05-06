@@ -2,7 +2,7 @@ import React from "react";
 import Tetris from './components/Tetris';
 import './tetris.css';
 
-function Tetris_main() {
+function TetrisMain() {
     return (
         
 
@@ -13,4 +13,4 @@ function Tetris_main() {
     );
 }
 
-export default Tetris_main;
+export default TetrisMain;
