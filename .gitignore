@@ -1,0 +1,24 @@
+# Dependency directories
+
+
+
+jspm_packages/
+
+
+__pycache__/
+
+
+node_modules/
+
+cli_responses/
+cli_posts/
+
+package-lock.json
+
+
+
+
+
+package-lock.json
+
+
