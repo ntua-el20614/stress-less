@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import BreathingExercise from './BreathingEx';
-import MemoryExercise from './MemoryEx';
 import TetrisMain from './tetris/main';
 import brbImage from './img/brb.png';
 import logo from './img/favicon.ico';
+import GameBoard from './memgame/GameBoard';
 
 const Header = ({ onLogin }) => {
   const logoStyle = {
@@ -60,7 +60,7 @@ function Homepage() {
         <img onClick={handleExerciseChange} style={imageStyle} src={brbImage} alt="BRB" />
         <div style={exercisesContainerStyle}>
           {activeExercise === 'breathing' && <BreathingExercise onStart={() => console.log('Breathing exercise started')} />}
-          {activeExercise === 'memory' && <MemoryExercise onStart={() => console.log('Memory exercise started')} />}
+          {activeExercise === 'memory' && <GameBoard onStart={() => console.log('Memory exercise started')} />}
           {activeExercise === 'tetris' && <TetrisMain />}
         </div>
       </main>
