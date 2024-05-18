@@ -11,31 +11,26 @@ def replace_in_file(file_path, old_string, new_string):
         file.write(filedata)
 
 def main():
-    if len(sys.argv) > 3 and len(sys.argv) < 2:
-        print("Usage: python script.py <old_string> <new_string>")
+    if len(sys.argv) != 2:
+        print("Usage: python3 replace.py <go_online|go_offline>")
         sys.exit(1)
-    
-    elif len(sys.argv) == 2 and sys.argv[1]=="go_online":
-        
+
+    command = sys.argv[1]
+    if command == "go_online":
         old_string = "localhost"
         new_string = "uniportal.sytes.net"
-
-    elif len(sys.argv) == 2 and sys.argv[1] == "go_offline":
-
+    elif command == "go_offline":
         old_string = "uniportal.sytes.net"
         new_string = "localhost"
     else:
-        old_string = sys.argv[1]
-        new_string = sys.argv[2]
-    
-    target_extensions = {'.html', '.js', '.py'}
+        print("Invalid command.")
+        sys.exit(1)
 
-    for root, dirs, files in os.walk('.'):
+    target_extensions = {'.html', '.js', '.py'}
+    target_directory = './front-end/src'
+
+    for root, dirs, files in os.walk(target_directory):
         for file in files:
-            if file == 'replace.py':
-                continue
-            if file == 'database.js':
-                continue
             if file.endswith(tuple(target_extensions)):
                 file_path = os.path.join(root, file)
                 replace_in_file(file_path, old_string, new_string)
