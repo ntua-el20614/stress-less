@@ -43,7 +43,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   const [stressLevelAfter, setStressLevelAfter] = useState('');
   const [gamePlayed, setGamePlayed] = useState(false);  // Tracks if a game has been played
   const user = Cookies.get('userId');
-  console.log(gamePlayed)
+  console.log('Game played:', gamePlayed);
   useEffect(() => {
     let chance = Math.random()<0.4;
     console.log('Game played:', gamePlayed, 'Chance:', chance);
