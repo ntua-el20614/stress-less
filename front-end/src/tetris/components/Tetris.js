@@ -1,3 +1,4 @@
+// src/tetris/components/Tetris.js
 import React, { useState } from 'react';
 
 import { createStage, checkCollision } from '../gameHelpers';
@@ -13,9 +14,7 @@ import { useGameStatus } from '../hooks/useGameStatus';
 import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
-import DPad from './DPad';  // Import the DPad component
-
-
+import DPad from './DPad';
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
@@ -42,16 +41,15 @@ const Tetris = () => {
   };
 
   const dropPlayer = () => {
-    drop(); // Manually trigger a drop
-    setDropTime(1000 / (level + 1)); // Reset dropTime after manual drop for continuous play
+    drop();
+    setDropTime(1000 / (level + 1));
   };
 
   const keyUp = ({ keyCode }) => {
     if (!gameOver && keyCode === 40) {
-      setDropTime(1000 / (level + 1)); // Reset to normal dropping speed when down key is released
+      setDropTime(1000 / (level + 1));
     }
   };
-
 
   const drop = () => {
     if (rows > (level + 1) * 10) {
@@ -78,7 +76,7 @@ const Tetris = () => {
 
   const move = (e) => {
     if (!gameOver) {
-      e.preventDefault();  // Prevent default to stop things like scrolling
+      e.preventDefault();
       const { keyCode } = e;
       if (keyCode === 37) {
         movePlayer(-1);
@@ -91,7 +89,6 @@ const Tetris = () => {
       }
     }
   };
-  
 
   return (
     <StyledTetrisWrapper
@@ -113,14 +110,13 @@ const Tetris = () => {
             </div>
           )}
           <StartButton callback={startGame} />
-          <DPad
-            onUp={() => playerRotate(stage, 1)}
-            onLeft={() => movePlayer(-1)}
-            onRight={() => movePlayer(1)}
-            onDown={() => dropPlayer()}
-          />
-
         </aside>
+        <DPad
+          onUp={() => playerRotate(stage, 1)}
+          onLeft={() => movePlayer(-1)}
+          onRight={() => movePlayer(1)}
+          onDown={() => dropPlayer()}
+        />
       </StyledTetris>
     </StyledTetrisWrapper>
   );

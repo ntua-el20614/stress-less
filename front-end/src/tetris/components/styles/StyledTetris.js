@@ -4,7 +4,7 @@ import bgImage from '../../img/bg.png';
 
 export const StyledTetrisWrapper = styled.div`
   width: 100vw;
-  height: 65.25vh; // CHANGE THIS WHEN YOU GO BACK TO ATHENS
+  height: 75vh; // CHANGE THIS WHEN YOU GO BACK TO ATHENS
   background: url(${bgImage}) #000;
   background-size: cover;
   overflow: hidden;
@@ -24,3 +24,5 @@ export const StyledTetris = styled.div`
     padding: 0 20px;
   }
 `;
+
+ 
