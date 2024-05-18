@@ -26,7 +26,7 @@ exports.addUser = async (req, res, next) => {
 //SELECT * FROM game_sessions WHERE userID = ?;
 exports.getUserGameSessions = async (req, res) => {
     const { userID } = req.query;
-    console.log(req.query);
+
     try {
         const query = 'SELECT * FROM game_sessions WHERE userID = ?';
         const [results] = await pool.query(query, [userID]);
