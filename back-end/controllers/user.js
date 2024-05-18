@@ -1,0 +1,60 @@
+// controllers/user.js
+const bcrypt = require('bcryptjs');
+const { pool } = require('../utils/database');
+
+exports.addUser = async (req, res, next) => {
+    const { username, password } = req.body;
+    
+    try {
+        // Hash the password with a salt round of 10
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
+        const [results] = await pool.query(query, [username, hashedPassword]);
+        res.status(201).json({ message: 'User added successfully', userId: results.insertId });
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
+            return res.status(409).json({ message: 'User already exists' });
+        }
+        console.error('SQL Error:', error);
+        res.status(500).json({ message: 'Error adding user', error: error });
+    }
+};
+
+
+
+//SELECT * FROM game_sessions WHERE userID = ?;
+exports.getUserGameSessions = async (req, res) => {
+    const { userID } = req.query;
+    console.log(req.query);
+    try {
+        const query = 'SELECT * FROM game_sessions WHERE userID = ?';
+        const [results] = await pool.query(query, [userID]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('SQL Error:', error);
+        res.status(500).json({ message: 'Error fetching game sessions', error: error });
+    }
+};
+
+
+exports.returnPreference = async (req, res) => {
+    const { userID } = req.query;
+    try {
+        const query = `SELECT gameName, 
+        SUM(TIMESTAMPDIFF(SECOND, startTime, endTime)) AS totalSeconds,
+        (SUM(TIMESTAMPDIFF(SECOND, startTime, endTime)) / 
+        (SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, endTime)) 
+         FROM game_sessions WHERE userID = ?) * 100) AS percentage
+ FROM game_sessions
+ JOIN games ON game_sessions.gameID = games.gameID
+ WHERE userID = ?
+ GROUP BY gameName;
+ `;
+        const [results] = await pool.query(query, [userID,userID]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('SQL Error:', error);
+        res.status(500).json({ message: 'Error fetching preference', error: error });
+    }
+}
