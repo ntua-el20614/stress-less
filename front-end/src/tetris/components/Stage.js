@@ -12,7 +12,7 @@ const Stage = ({ stage }) => {
       {stage.map((row, y) => 
         row.map((cell, x) => <Cell key={`${y}-${x}`} type={cell[0]} />)
       )}
-      {console.log('Stage width:', width, 'Stage height:', height)}
+    
     </StyledStage>
   );
 };

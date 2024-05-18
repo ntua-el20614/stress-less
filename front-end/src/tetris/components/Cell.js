@@ -4,7 +4,7 @@ import { TETROMINOS } from '../tetrominos';
 
 const Cell = ({ type, width }) => (
   <StyledCell type={type} color={TETROMINOS[type].color} width={width}>
-    {console.log('Cell width:', width)}
+   
   </StyledCell>
 );
 
