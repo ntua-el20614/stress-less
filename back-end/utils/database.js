@@ -6,7 +6,7 @@ const pool = mysql.createPool({
     user: 'root',
     port: 3306,
     password: 'password',
-    database: 'stress_relief',
+    database: 'stress_less',
     connectionLimit: 100 // Adjust the limit as per your requirements
   });
   
