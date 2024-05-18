@@ -1,0 +1,47 @@
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    background: #fff;
+    text-align: center;
+}
+
+.auth-input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-button {
+    width: 94%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #007BFF;
+    cursor: pointer;
+}
+
+.auth-button.secondary {
+    background-color: #28a745;
+}
+
+.auth-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.error-message, .message.error {
+    color: red;
+    font-size: 0.8em;
+}
+
+.success-message {
+    color: green;
+    font-size: 0.8em;
+}
