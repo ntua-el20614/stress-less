@@ -22,6 +22,28 @@ exports.addUser = async (req, res, next) => {
 };
 
 
+exports.loginUser = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const query = 'SELECT * FROM users WHERE username = ?';
+        const [results] = await pool.query(query, [username]);
+        const user = results[0];
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+
+        res.status(200).json({ message: 'User logged in successfully', userId: user.userID });
+    } catch (error) {
+        console.error('SQL Error:', error);
+        res.status(500).json({ message: 'Error logging in user', error: error });
+    }
+};
 
 //SELECT * FROM game_sessions WHERE userID = ?;
 exports.getUserGameSessions = async (req, res) => {
