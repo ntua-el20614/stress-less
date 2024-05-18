@@ -19,14 +19,14 @@ function GameBoard() {
                 gridTemplateColumns: "repeat(3, 15vw)",
                 cardSize: { height: '7.5vw', width: '7.5vw' },
                 rowGap: '1px',  
-                columnGap: '60px'  
+                columnGap: '60px'
             };
         } else {
             return {
                 gridTemplateColumns: "repeat(4, 15vw)",
-                cardSize: { height: '15vw', width: '15vw' }, 
-                rowGap: '0.5rem',  
-                columnGap: '0.5rem' 
+                cardSize: { height: '25vw', width: '25vw' }, 
+                rowGap: '5.5rem',  
+                columnGap: '5.5rem' 
             };
         }
     };
@@ -100,7 +100,7 @@ function GameBoard() {
     return ( 
         <div className="container"> 
             <div className="header"> 
-                <h1 style={{ textAlign: 'center' }}>Memory Game</h1> 
+                <h1>Memory Game</h1> 
             </div> 
             <div className="board" style={boardStyle}> 
                 {cardsArray.map((item) => ( 

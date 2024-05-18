@@ -15,113 +15,117 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100vh; /* This makes sure it takes at least the full height of the viewport */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* This centers children vertically */
   font-size: calc(10px + 2vmin);
   color: white;
 }
- 
+
 /* New styles for GameBoard component */
-* { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container { 
-  display: flex; 
-  flex-direction: column; 
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.header { 
-  display: flex; 
-  flex-direction: row; 
-  padding: 10px; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-} 
 
-.button { 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 0.5rem 0.8rem; 
-  font-family: cursive; 
-  width: 200px; 
-  font-size: 1.2rem; 
-  font-weight: bolder; 
-  border-radius: 0.7rem; 
-  border-style: none; 
-  background-color: red; 
-  color: white; 
-  margin-top: 4px; 
-  margin-left: 55%; 
+.header {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Centers horizontally in the flex container */
+  align-items: center; /* Centers vertically in the flex container */
+  width: 100%; /* Takes full width of its container */
 }
 
-.button:hover { 
-  border: 2px solid black; 
-  cursor: pointer; 
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.8rem;
+  font-family: cursive;
+  width: 200px;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  border-radius: 0.7rem;
+  border-style: none;
+  background-color: red;
+  color: white;
+  margin-top: 4px;
+  margin-left: 55%;
 }
 
-.board { 
-  display: grid; 
-  margin: auto; 
-  margin-top: 3rem; 
-  grid-template-columns: repeat(4, 9rem); 
-  place-items: center; 
-  row-gap: 2rem; 
+.button:hover {
+  border: 2px solid black;
+  cursor: pointer;
 }
 
-.comments { 
-  padding: 0.25rem 1rem; 
-  background-color: white; 
-  margin: auto; 
-  margin-top: 40px; 
-  text-align: center; 
-  border-radius: 2rem; 
+.board {
+  display: grid;
+  margin: auto;
+  margin-top: 3rem;
+  grid-template-columns: repeat(4, 9rem);
+  place-items: center;
+  row-gap: 2rem;
+}
+
+.comments {
+  padding: 0.25rem 1rem;
+  background-color: white;
+  margin: auto;
+  margin-top: 40px;
+  text-align: center;
+  border-radius: 2rem;
 }
 
 /* CSS for Card component */
-.face { 
-  height: 6rem; 
+.face {
+  height: 6rem;
 }
 
-.back { 
-  height: 6rem; 
-  width: 6rem; 
-  background-color: rgb(253, 218, 175); 
-  color: rgb(61, 21, 21); 
-  border: 1px solid black; 
-  border-radius: 50%; 
-
-}
-
-.item .face { 
-  position: absolute; 
-  transform: rotateY(90deg); 
-  transition: all ease-in 0.25s; 
-}
-
-.toggled .face { 
-  transform: rotateY(0deg); 
-  transition-delay: 0.25s; 
-  margin-left: -40px; /* Added margin-left property */
+.back {
+  height: 6rem;
+  width: 6rem;
+  background-color: rgb(253, 218, 175);
+  color: rgb(61, 21, 21);
+  border: 1px solid black;
+  border-radius: 50%;
 
 }
 
-.item .back { 
-  transition: all ease-in 0.25s; 
-  transition-delay: 0.25s; 
+.item .face {
+  position: absolute;
+  transform: rotateY(90deg);
+  transition: all ease-in 0.25s;
+}
+
+.toggled .face {
+  transform: rotateY(0deg);
+  transition-delay: 0.25s;
+  margin-left: -40px;
+  /* Added margin-left property */
 
 }
 
-.toggled .back { 
-  transform: rotateY(90deg); 
-  transition-delay: 0s; 
-  margin-left: 20px; /* Added margin-left property */
+.item .back {
+  transition: all ease-in 0.25s;
+  transition-delay: 0.25s;
+
+}
+
+.toggled .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+  margin-left: 20px;
+  /* Added margin-left property */
 
 }
