@@ -58,7 +58,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   const endSession = async () => {
     if (sessionID) {
       try {
-        await fetch('http://uniportal.sytes.net:1022/gamesess/end', {
+        await fetch('http://localhost:1022/gamesess/end', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionID })
@@ -74,7 +74,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
       const userID = Cookies.get('userId');
       if (!userID) return;
 
-      const response = await fetch('http://uniportal.sytes.net:1022/gamesess/start', {
+      const response = await fetch('http://localhost:1022/gamesess/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userID, gameID })
@@ -93,7 +93,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   
   const handleFeedback = async () => {
     try {
-      const response = await fetch('http://uniportal.sytes.net:1022/gamesess/feedback', {
+      const response = await fetch('http://localhost:1022/gamesess/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionID, stressLevelBefore, stressLevelAfter })

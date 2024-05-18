@@ -18,7 +18,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch('http://uniportal.sytes.net:1022/users/add', {
+            const response = await fetch('http://localhost:1022/users/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
