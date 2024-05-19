@@ -42,23 +42,26 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   const [stressLevelBefore, setStressLevelBefore] = useState('');
   const [stressLevelAfter, setStressLevelAfter] = useState('');
   const [gamePlayed, setGamePlayed] = useState(false);  // Tracks if a game has been played
+  const [feedbackCheck, setFeedbackCheck] = useState({ shouldCheck: false, chance: false });
+  const [feedbackReady, setFeedbackReady] = useState(false);
+
   const user = Cookies.get('userId');
   console.log('Game played:', gamePlayed);
+  
   useEffect(() => {
-    let chance = Math.random()<0.4;
-    console.log('Game played:', gamePlayed, 'Chance:', chance);
-    if (gamePlayed && chance) {
-      setShowFeedback(true);
-      setGamePlayed(false);  // Reset the game played flag
-      setActiveExercise(null); // Clears the current game view
+    console.log('Session:', feedbackCheck);
+    if (feedbackCheck.shouldCheck && feedbackCheck.chance) {
+      setFeedbackReady(true); // Set ready to show feedback, but do not show it yet
     }
-  }, [activeExercise, gamePlayed, user]);
+  }, [feedbackCheck]);
+  
+  
 
 
   const endSession = async () => {
     if (sessionID) {
       try {
-        await fetch('http://localhost:1022/gamesess/end', {
+        await fetch('http://localhost:1045/gamesess/end', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionID })
@@ -74,7 +77,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
       const userID = Cookies.get('userId');
       if (!userID) return;
 
-      const response = await fetch('http://localhost:1022/gamesess/start', {
+      const response = await fetch('http://localhost:1045/gamesess/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userID, gameID })
@@ -93,7 +96,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   
   const handleFeedback = async () => {
     try {
-      const response = await fetch('http://localhost:1022/gamesess/feedback', {
+      const response = await fetch('http://localhost:1045/gamesess/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionID, stressLevelBefore, stressLevelAfter })
@@ -114,6 +117,14 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
 
   
   const handleExerciseChange = () => {
+    // Check if feedback should be shown based on previous readiness
+    if (feedbackReady) {
+      setShowFeedback(true);
+      setFeedbackReady(false); // Reset feedback readiness after showing it
+      return; // Optional: prevent exercise change during feedback display if desired
+    }
+  
+    // Regular exercise change logic
     if (showFeedback) {
       setShowFeedback(false);
       return; // Prevent game switch during feedback
@@ -125,15 +136,24 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
       randomExercise = exercises[Math.floor(Math.random() * exercises.length)];
     }
     setActiveExercise(randomExercise);
+  
     if (randomExercise === 'tetris' || randomExercise === 'memory') {
+      const chance = Math.random() < 0.4;
+      setFeedbackCheck({ shouldCheck: false, chance });  // Set the chance but mark it as not ready to check
+  
       const gameID = randomExercise === 'tetris' ? 1 : 2;
       setTimeout(() => {
-        setGamePlayed(true);  // Mark that a game has been played
-        startSession(gameID)
+        setGamePlayed(true);  // Mark that a game has been played after 10 seconds
+        setFeedbackCheck(prev => ({ ...prev, shouldCheck: true }));  // Now it's ready to check
+        setFeedbackReady(true);  // Indicate that feedback is ready to be shown
+        startSession(gameID);  // Start session after 10 seconds
       }, 10000);
+    } else {
+      setFeedbackCheck({ shouldCheck: false, chance: false });  // Reset for non-feedback games
     }
   };
-
+  
+  
   return (
     <div className="App">
       <Header/>
