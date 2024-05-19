@@ -38,13 +38,3 @@ CREATE TABLE feedback (
     FOREIGN KEY (sessionID) REFERENCES game_sessions(sessionID)
 );
 
--- Example of a trigger to automatically log the end time of a game session
-DELIMITER $$
-CREATE TRIGGER LogEndTime BEFORE UPDATE ON game_sessions
-FOR EACH ROW
-BEGIN
-    IF NEW.endTime IS NULL THEN
-        SET NEW.endTime = CURRENT_TIMESTAMP;
-    END IF;
-END$$
-DELIMITER ;
