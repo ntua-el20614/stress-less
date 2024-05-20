@@ -37,7 +37,7 @@ const Header = ({ onLogin }) => {
 };
 
 function Homepage() {  const [activeExercise, setActiveExercise] = useState(null);
-  const [sessionID, setSessionID] = useState(null);
+  let [sessionID, setSessionID] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [stressLevelBefore, setStressLevelBefore] = useState('');
   const [stressLevelAfter, setStressLevelAfter] = useState('');
@@ -54,13 +54,13 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   useEffect(() => {
     const user = Cookies.get('userId');
 
-    //console.log('Game played:', feedbackCheck); 
-    if ((user && user!=='null') && (activeExercise === 'tetris' || activeExercise === 'memory') && feedbackCheck.shouldCheck && feedbackCheck.chance) {
+    console.log('Game played:', feedbackCheck); 
+    if (sessionID!= null && (user && user!=='null') && (activeExercise === 'tetris' || activeExercise === 'memory') && feedbackCheck.shouldCheck && feedbackCheck.chance) {
       setFeedbackReady(true); // Indicate that feedback is ready to be shown
     } else {
       setFeedbackReady(false); // Ensure feedback is not ready if conditions aren't met
     }
-  }, [feedbackCheck, activeExercise]); // Include activeExercise in the dependency array
+  }, [feedbackCheck, activeExercise, sessionID]); // Include activeExercise in the dependency array
   
   
   
@@ -109,6 +109,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
         alert('Please fill in both stress levels');
         return;
       }
+      console.log('Feedback:', sessionID, stressLevelBefore, stressLevelAfter)
       const response = await fetch('http://localhost:1045/gamesess/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,6 +117,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
       });
 
       if (response.ok) {
+        sessionID = null;
         //console.log("Feedback sent successfully");
         setShowFeedback(false); // Hide the feedback form
         setGamePlayed(false);  // Reset the game played flag
@@ -132,11 +134,12 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
     if (feedbackReady) {
       setShowFeedback(true);
       setFeedbackReady(false); // Reset feedback readiness after showing it
-      return; // Stop further execution to process feedback
+      //return; // Stop further execution to process feedback
     }
   
     if (showFeedback) {
       setShowFeedback(false);
+      setFeedbackReady(false);
     }
   
     endSession();
@@ -150,7 +153,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
     if (randomExercise === 'tetris' || randomExercise === 'memory') {
       const chance_num = Math.random();
       const chance = chance_num > 0.4;
-      //console.log('Chance:', chance_num, chance);
+      console.log('Chance:', chance_num, chance);
       //setFeedbackCheck({ shouldCheck: false, chance: false }); // Initially reset both to false
   
       const gameID = randomExercise === 'tetris' ? 1 : 2;
@@ -172,7 +175,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
         <img onClick={handleExerciseChange} style={{ marginTop: '1rem', alignSelf: 'center', maxWidth: '10%', cursor: 'pointer' }} src={brbImage} alt="BRB" />
         {!showFeedback && (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {activeExercise === 'breathing' && <BreathingExercise onStart={() => console.log('Breathing exercise started')} />}
+            {activeExercise === ' breathing' && <BreathingExercise onStart={() => console.log('Breathing exercise started')} />}
             {activeExercise === 'memory' && <GameBoard onStart={() => console.log('Memory exercise started')} />}
             {activeExercise === 'tetris' && <TetrisMain />}
           </div>

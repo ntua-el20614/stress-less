@@ -22,7 +22,7 @@ const GameStats = () => {
   useEffect(() => {
     const fetchGameStats = async () => {
       try {
-        const response = await fetch('http://localhost:1045/stats/feedback');
+        const response = await fetch('http://localhost:1045/stats/game_feedback');
         const data = await response.json();
         const stats = data.map(stat => ({
           ...stat,
