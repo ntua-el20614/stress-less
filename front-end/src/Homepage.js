@@ -48,12 +48,20 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
   const user = Cookies.get('userId');
   console.log('Game played:', gamePlayed);
   
+
+  
+
   useEffect(() => {
-    console.log('Session:', feedbackCheck);
-    if (feedbackCheck.shouldCheck && feedbackCheck.chance) {
-      setFeedbackReady(true); // Set ready to show feedback, but do not show it yet
+    const user = Cookies.get('userId');
+
+    //console.log('Game played:', feedbackCheck); 
+    if ((user && user!=='null') && (activeExercise === 'tetris' || activeExercise === 'memory') && feedbackCheck.shouldCheck && feedbackCheck.chance) {
+      setFeedbackReady(true); // Indicate that feedback is ready to be shown
+    } else {
+      setFeedbackReady(false); // Ensure feedback is not ready if conditions aren't met
     }
-  }, [feedbackCheck]);
+  }, [feedbackCheck, activeExercise]); // Include activeExercise in the dependency array
+  
   
   
 
@@ -67,7 +75,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
           body: JSON.stringify({ sessionID })
         });
       } catch (error) {
-        console.log('Error ending session:', error);
+        //console.log('Error ending session:', error);
       }
     }
   };
@@ -89,13 +97,18 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
         throw new Error(data.message);
       }
     } catch (error) {
-      console.log('Error starting session:', error);
+      //console.log('Error starting session:', error);
     }
   };
 
   
   const handleFeedback = async () => {
     try {
+      if(sessionID === null) return;
+      if (stressLevelBefore === '' || stressLevelAfter === '') {
+        alert('Please fill in both stress levels');
+        return;
+      }
       const response = await fetch('http://localhost:1045/gamesess/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -103,49 +116,47 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
       });
 
       if (response.ok) {
-        console.log("Feedback sent successfully");
+        //console.log("Feedback sent successfully");
         setShowFeedback(false); // Hide the feedback form
         setGamePlayed(false);  // Reset the game played flag
       } else {
         throw new Error("Failed to send feedback");
       }
     } catch (error) {
-      console.log('Error sending feedback:', error);
+      //console.log('Error sending feedback:', error);
     }
   };
 
 
-  
   const handleExerciseChange = () => {
-    // Check if feedback should be shown based on previous readiness
     if (feedbackReady) {
       setShowFeedback(true);
       setFeedbackReady(false); // Reset feedback readiness after showing it
-      return; // Optional: prevent exercise change during feedback display if desired
+      return; // Stop further execution to process feedback
     }
   
-    // Regular exercise change logic
     if (showFeedback) {
       setShowFeedback(false);
-      return; // Prevent game switch during feedback
     }
+  
     endSession();
     const exercises = ['breathing', 'memory', 'tetris'];
     let randomExercise = exercises[Math.floor(Math.random() * exercises.length)];
     while (randomExercise === activeExercise) {
       randomExercise = exercises[Math.floor(Math.random() * exercises.length)];
     }
-    setActiveExercise(randomExercise);
+    setActiveExercise(randomExercise); // Update the active exercise state
   
     if (randomExercise === 'tetris' || randomExercise === 'memory') {
-      const chance = Math.random() < 0.4;
-      setFeedbackCheck({ shouldCheck: false, chance });  // Set the chance but mark it as not ready to check
+      const chance_num = Math.random();
+      const chance = chance_num > 0.4;
+      //console.log('Chance:', chance_num, chance);
+      //setFeedbackCheck({ shouldCheck: false, chance: false }); // Initially reset both to false
   
       const gameID = randomExercise === 'tetris' ? 1 : 2;
       setTimeout(() => {
         setGamePlayed(true);  // Mark that a game has been played after 10 seconds
-        setFeedbackCheck(prev => ({ ...prev, shouldCheck: true }));  // Now it's ready to check
-        setFeedbackReady(true);  // Indicate that feedback is ready to be shown
+        setFeedbackCheck({ shouldCheck: true, chance });  // Update based on actual conditions
         startSession(gameID);  // Start session after 10 seconds
       }, 10000);
     } else {
