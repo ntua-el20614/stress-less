@@ -7,7 +7,8 @@ USE stress_less;
 CREATE TABLE users (
     userID INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    tetris_score int
 );
 
 -- Create a table for games to store different types of games

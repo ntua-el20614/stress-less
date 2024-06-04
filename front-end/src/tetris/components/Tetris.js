@@ -1,5 +1,6 @@
 // src/tetris/components/Tetris.js
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 
 import { createStage, checkCollision } from '../gameHelpers';
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
@@ -62,7 +63,21 @@ const Tetris = () => {
     } else {
       if (player.pos.y < 1) {
         //console.log('GAME OVER!!!');
-        setGameOver(true);
+        console.log('Final Score:', score);
+
+
+        //get user id from cookie
+        const userID = Cookies.get('userId');
+        console.log('User ID:', userID);
+
+        fetch(`http://localhost:1045/users/tetris_highscore/${userID}/${score}`)
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+        
+        
+        
+          setGameOver(true);
         setDropTime(null);
       } else {
         updatePlayerPos({ x: 0, y: 0, collided: true });
