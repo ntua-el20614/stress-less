@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 function BreathingExercise() {
   const phases = [
     { name: 'Breathe In', duration: 4 },
-    { name: 'Hold', duration: 7 },
-    { name: 'Breathe Out', duration: 8 },
-    { name: 'Rest', duration: 30 },
+    { name: 'Hold', duration: 2 },
+    { name: 'Breathe Out', duration: 4 },
+    { name: 'Rest', duration: 20 },
   ];
 
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(null);
