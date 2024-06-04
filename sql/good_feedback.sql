@@ -21,4 +21,4 @@ WHERE
     gs.endTime IS NOT NULL AND
     TIMESTAMPDIFF(SECOND, gs.startTime, gs.endTime) >= 10
 ORDER BY
-    gs.startTime DESC;
+    duration_seconds DESC;

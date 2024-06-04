@@ -148,6 +148,7 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
     while (randomExercise === activeExercise) {
       randomExercise = exercises[Math.floor(Math.random() * exercises.length)];
     }
+    console.log('New exercise:', randomExercise);
     setActiveExercise(randomExercise); // Update the active exercise state
   
     if (randomExercise === 'tetris' || randomExercise === 'memory') {
@@ -175,8 +176,8 @@ function Homepage() {  const [activeExercise, setActiveExercise] = useState(null
         <img onClick={handleExerciseChange} style={{ marginTop: '1rem', alignSelf: 'center', maxWidth: '10%', cursor: 'pointer' }} src={brbImage} alt="BRB" />
         {!showFeedback && (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {activeExercise === ' breathing' && <BreathingExercise onStart={() => console.log('Breathing exercise started')} />}
-            {activeExercise === 'memory' && <GameBoard onStart={() => console.log('Memory exercise started')} />}
+            {activeExercise === 'breathing' && <BreathingExercise />}
+            {activeExercise === 'memory' && <GameBoard />}
             {activeExercise === 'tetris' && <TetrisMain />}
           </div>
         )}
