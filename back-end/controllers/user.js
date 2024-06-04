@@ -80,3 +80,21 @@ exports.returnPreference = async (req, res) => {
         res.status(500).json({ message: 'Error fetching preference', error: error });
     }
 }
+
+
+exports.changeTetrisHighscore = async (req, res) => {
+    const { userID ,score } = req.params;
+
+    
+    try {
+        const query = `
+        UPDATE users SET tetris_score = '${score}' WHERE (userID = '${userID}');
+        
+        `;
+        const [results] = await pool.query(query, [score]);
+        res.status(200).json({ message: 'Highscore updated successfully' });
+    } catch (error) {
+        console.error('SQL Error:', error);
+        res.status(500).json({ message: 'Error updating highscore', error: error });
+    }
+}
