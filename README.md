@@ -21,13 +21,13 @@ Stress Less is a web application designed to help you reduce stress through inte
     <td style="text-align: center;">
       <p>Save the app to your home screen for a better display experience.</p>
       <div style="text-align: center;">
-        <img src="./media/save-hs.jpg" alt="Save to Home Screen" style="display: block; margin: 0 auto;" width="250"/>
+        <img src="./media/save-hs.jpg" alt="Save to Home Screen" width="250" style="display: block; margin: 0 auto;"/>
       </div>
     </td>
     <td style="text-align: center;">
       <p>Check out the gameplay for the three different exercises.</p>
       <div style="text-align: center;">
-        <img src="./media/gameplay.gif" alt="Gameplay" style="display: block; margin: 0 auto;" width="250"/>
+        <img src="./media/gameplay.gif" alt="Gameplay" width="250" style="display: block; margin: 0 auto;"/>
       </div>
     </td>
   </tr>
