@@ -10,12 +10,12 @@ Stress Less is a web application designed to help you reduce stress through inte
   - **Memory Game**: Match pairs of cards to win.
   - **Breathing Exercise**: Follow a guided breathing exercise with a rhythm of 4 seconds inhaling, 2 seconds holding, 4 seconds exhaling, and 20 seconds resting.
 
-## GIF Demonstrations
+## Demonstrations
 
 <table>
   <tr>
-    <th>How to Save to Home Screen</th>
-    <th>Gameplay for the Three Exercises</th>
+    <th style="text-align: center;">How to Save to Home Screen</th>
+    <th style="text-align: center;">Gameplay for the Three Exercises</th>
   </tr>
   <tr>
     <td style="text-align: center;">
