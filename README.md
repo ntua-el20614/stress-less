@@ -14,11 +14,11 @@ Stress Less is a web application designed to help you reduce stress through inte
 
 ### How to Save to Home Screen
 Save the app to your home screen for a better display experience.
-<img src="./media/save-hs.gif" alt="Save to Home Screen" width="300"/>
+<img src="./media/save-hs.jpg" alt="Save to Home Screen" width="250"/>
 
 ### Gameplay for the Three Exercises
 Check out the gameplay for the three different exercises.
-<img src="./media/gameplay.gif" alt="Gameplay" width="300"/>
+<img src="./media/gameplay.gif" alt="Gameplay" width="250"/>
 
 ## Technologies Used
 
